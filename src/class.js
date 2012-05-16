@@ -125,10 +125,6 @@ define(function() {
             while (item = items.shift()) {
                 mix(proto, item.prototype || item);
             }
-        },
-
-        'Statics': function(staticProperties) {
-            mix(this, staticProperties);
         }
     };
 
