@@ -128,7 +128,21 @@ define(function() {
         },
 
         'Statics': function(staticProperties) {
-            mix(this, staticProperties);
+            var statics = staticProperties;
+            var filter = statics.StaticsFilter;
+
+            // 可以通过 filter 指定需要混入的静态方法
+            if (filter) {
+                statics = {};
+                for (var i = 0; i < filter.length; i++) {
+                    var key = filter[i];
+                    if (staticProperties.hasOwnProperty(key)) {
+                        statics[key] = staticProperties[key];
+                    }
+                }
+            }
+
+            mix(this, statics);
         }
     };
 
