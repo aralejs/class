@@ -1,0 +1,277 @@
+<!DOCTYPE HTML>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Class</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0" />
+        
+        <link rel="stylesheet" href="../assets/base.css" />
+        <link rel="stylesheet" href="../assets/style.css" />
+        <link rel="stylesheet" href="../assets/pygments.css" />
+        <script src="http://aralejs.org/dist/seajs/1.2.0/sea.js" id="seajsnode"></script>
+        
+        
+        <!--[if lt IE 9]>
+        <script type="text/javascript" src="../assets/html5shiv.js"></script>
+        <![endif]-->
+    </head>
+    <body>
+        <header id="header">
+            <h1 id="brand"><a href="http://aralejs.org/">Arale</a></h1>
+            <nav id="nav" role="navigation">
+                <a href="../">Class</a>
+                
+                
+                <a id="nav-test" href="../tests/runner.html">Tests</a>
+                
+            </nav>
+        </header>
+
+        <div id="main">
+            <div class="container">
+                
+
+<nav id="side-nav">
+    
+    <a href="../docs/competitors.html">competitors</a>
+    
+    <a href="../docs/meta.html">meta</a>
+    
+</nav>
+
+
+                <h1>OO 模拟那些事儿</h1>
+<p>感谢所有老前辈们，感谢所有同类代码。因为有了你们，世界才丰富多采。</p>
+
+<hr/>
+
+<h2>Douglas Crockford 的尝试与悟道</h2>
+<p>关于类继承，Douglas 有一篇经典文章：</p>
+
+<ul>
+<li><a href="http://javascript.crockford.com/inheritance.html">Classical Inheritance in JavaScript</a></li>
+</ul>
+<p>这篇文章里，老道分析了为什么要在 JavaScript 里模拟类继承：主要目的是复用。老道的实现方式是给
+<code>Function.prototype</code> 增加 <code>method</code> 和 <code>inherits</code> 两个方法，并提供了 <code>uber</code> 语法糖。</p>
+<p>悲催的是，大神实现的 <code>inherits</code> 和 <code>uber</code> 存在不少缺陷，国内和国外都有不少人剖析过，可以参考
+2008 年时的一篇讨论帖子：</p>
+
+<ul>
+<li><a href="http://www.iteye.com/topic/248933">Crockford uber 方法中的陷阱</a></li>
+</ul>
+<p>老道最后悟出了一段经常被引用的话：</p>
+
+<blockquote>
+<p>我编写 JavaScript 已经 8 个年头了，从来没有一次觉得需要使用 uber 方法。在类模式中，super
+的概念相当重要；但是在原型和函数式模式中，super 的概念看起来是不必要的。现在回顾起来，我早期在
+JavaScript 中支持类模型的尝试是一个错误。</p>
+</blockquote>
+<p>由此，老道又写了一篇经典文章，推崇在 JavaScript 里，直接使用原型继承：</p>
+
+<ul>
+<li><a href="http://javascript.crockford.com/prototypal.html">Prototypal Inheritance in JavaScript</a></li>
+</ul>
+<p>继续悲催的是，老道的实现，依旧有不足之处。可以参考两篇博文：</p>
+
+<ul>
+<li><a href="http://www.nczonline.net/blog/2006/10/14/debunking-object/">Debunking object()</a></li>
+<li><a href="http://blog.vjeux.com/2011/javascript/how-prototypal-inheritance-really-works.html">Javascript – How Prototypal Inheritance really works</a></li>
+</ul>
+<p>老道的代码虽然不尽完美，但老道的尝试和对原型继承的呼吁依旧非常值得我们尊敬和思考。</p>
+<p>研究到此，如果大家都能理解原型继承，问题其实已经终结，特别是在 webkit 等支持 <code>__proto__</code> 的运行环境下。比如：</p>
+<div class="highlight"><pre><span class="kd">function</span> <span class="nx">Animal</span><span class="p">()</span> <span class="p">{}</span>
+<span class="kd">function</span> <span class="nx">Dog</span><span class="p">()</span> <span class="p">{}</span>
+
+<span class="c1">// 要让 Dog 继承 Animal, 只需：</span>
+<span class="nx">Dog</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">__proto__</span> <span class="o">==</span> <span class="nx">Animal</span><span class="p">.</span><span class="nx">prototype</span><span class="p">;</span>
+
+<span class="c1">// 实例化后</span>
+<span class="kd">var</span> <span class="nx">dog</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Dog</span><span class="p">();</span>
+<span class="c1">// dog.__proto__ 指向 Dog.prototype</span>
+<span class="c1">// dog.__proto__.__proto__ 指向 Animal.prototype</span>
+<span class="c1">// 原型链已成功建立起来，而且很清晰</span>
+</pre></div>
+<p>老道的 <code>inherits</code> 和 NCZ 的 <code>inherit</code> 本质上都是设置好 <code>__proto__</code>
+属性。看清楚这一点，一切都很简单。</p>
+<p>原型继承的确已经够用，但这需要大家都能深入理解原型继承，对 <code>__proto__</code>, <code>prototype</code> 和 <code>new</code>
+等关键点有清晰的认识。通过 <code>inherits</code> 等方法，可以简化部分细节。但用户在使用时，依旧需要面对
+<code>prototype</code> 等属性，并且很容易写出有隐患的代码，比如：</p>
+<div class="highlight"><pre><span class="kd">function</span> <span class="nx">Animal</span><span class="p">()</span> <span class="p">{}</span>
+<span class="kd">function</span> <span class="nx">Dog</span><span class="p">()</span> <span class="p">{}</span>
+
+<span class="nx">util</span><span class="p">.</span><span class="nx">inherits</span><span class="p">(</span><span class="nx">Dog</span><span class="p">,</span> <span class="nx">Animal</span><span class="p">);</span>
+
+<span class="nx">Dog</span><span class="p">.</span><span class="nx">prototype</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="nx">talk</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{},</span>
+  <span class="nx">run</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{}</span>
+<span class="p">};</span>
+</pre></div>
+<p>上面的代码，你知道问题在哪吗？请继续阅读。</p>
+
+<h2>YUI 之路</h2>
+<p>YUI 团队是 Douglas 的铁杆粉丝团。从 YUI2 到 YUI3, 都高度贯彻了 Douglas 的精神。在 YUI
+里，提供了 <code>extend</code> 方法：</p>
+<div class="highlight"><pre><span class="kd">function</span> <span class="nx">Animal</span><span class="p">()</span> <span class="p">{}</span>
+<span class="kd">function</span> <span class="nx">Dog</span><span class="p">()</span> <span class="p">{}</span>
+
+<span class="nx">Y</span><span class="p">.</span><span class="nx">extend</span><span class="p">(</span><span class="nx">Dog</span><span class="p">,</span> <span class="nx">Animal</span><span class="p">,</span> <span class="p">{</span>
+    <span class="nx">talk</span><span class="o">:</span> <span class="nx">fn</span><span class="p">,</span>
+    <span class="nx">run</span><span class="o">:</span> <span class="nx">fn</span>
+<span class="p">});</span>
+</pre></div>
+<p>YUI 还提供了 <code>augment</code>, <code>mix</code> 等方法来混入原型和静态方法。理论上足够用了，但对普通使用者来说，依旧存在陷阱：</p>
+<div class="highlight"><pre><span class="kd">function</span> <span class="nx">Animal</span><span class="p">()</span> <span class="p">{}</span>
+<span class="kd">function</span> <span class="nx">Dog</span><span class="p">()</span> <span class="p">{}</span>
+
+<span class="nx">Y</span><span class="p">.</span><span class="nx">extend</span><span class="p">(</span><span class="nx">Dog</span><span class="p">,</span> <span class="nx">Animal</span><span class="p">);</span>
+
+<span class="nx">Dog</span><span class="p">.</span><span class="nx">prototype</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="nx">talk</span><span class="o">:</span> <span class="nx">fn</span><span class="p">,</span>
+    <span class="nx">run</span><span class="o">:</span> <span class="nx">fn</span>
+<span class="p">};</span>
+
+<span class="kd">var</span> <span class="nx">dog</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Dog</span><span class="p">();</span>
+<span class="nx">alert</span><span class="p">(</span><span class="nx">dog</span> <span class="k">instanceof</span> <span class="nx">Dog</span><span class="p">);</span> <span class="c1">// false</span>
+</pre></div>
+<p>上面的写法，破坏了 <code>Dog.prototype.constructor</code>, 导致 <code>instanceof</code> 不能正常工作。正确的写法是：</p>
+<div class="highlight"><pre><span class="nx">Dog</span><span class="p">.</span><span class="nx">prototype</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="nx">constructor</span><span class="o">:</span> <span class="nx">Dog</span><span class="p">,</span>
+    <span class="nx">talk</span><span class="o">:</span> <span class="nx">fn</span><span class="p">,</span>
+    <span class="nx">run</span><span class="o">:</span> <span class="nx">fn</span>
+<span class="p">};</span>
+</pre></div>
+<p>或</p>
+<div class="highlight"><pre><span class="nx">Dog</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">talk</span> <span class="o">=</span> <span class="nx">fn</span><span class="p">;</span>
+<span class="nx">Dog</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">run</span> <span class="o">=</span> <span class="nx">fn</span><span class="p">;</span>
+</pre></div>
+<p>通过 <code>extend</code> 等方式来实现原型继承，写法上很灵活。<code>constructor</code> 是个不小不大的问题，
+但对于类库来说，任何小问题，都有可能成为大问题。</p>
+<p><code>extend</code> 的方式，仅仅是对 JavaScript 语言中原型继承的简单封装，需要有一定 JavaScript
+编程经验后才能娴熟使用。（我个人其实蛮喜欢简简单单的 <code>extend</code>）。</p>
+<p>此外，<code>extend</code> 的灵活性也是一种“伤害”。定义一个类时，我们更希望能有一种比较固定的书写模式，
+什么东西写在什么地方，都能更简单，更一目了然。</p>
+<p>JavaScript 是一门大众语言，在类继承模式当道的今天，直接让用户去面对灵活的原型继承，未必是最好的选择。</p>
+<p>世界的进步在于人类的不满足。作为前端的我们，只是想用更简单更舒适的方式来书写代码。JavaScript
+新的语言规范里，已经提出了 <code>class</code> 概念。但在规范确定和浏览器原生支持前，故事还得继续。</p>
+<p><strong>注</strong>：YUI3 里，除了 <code>extend</code> 方式，也提供了 <code>Base.create</code>
+来创建新类，但是该方法比较重量级了，用起来不轻便。</p>
+
+<h2>Dean Edwards 的 Base.js</h2>
+<p>Dean Edwards 是前端界的一位老前辈。老前辈做过一个当时很著名的 JavaScript 类库：
+Base.js, 其中有一套非常不错的 OO 实现：</p>
+
+<ul>
+<li><a href="http://dean.edwards.name/weblog/2006/03/base/">A Base Class for JavaScript Inheritance</a></li>
+</ul>
+<p>这个方案开辟了一条阳光大道：通过精心构造的 <code>Base</code> 基类来实现类继承。同一时期，JavaScript
+界 OO 模拟蔚然成风，万马奔腾。让我们继续考考古。</p>
+
+<h2>Prototype 的 Class</h2>
+<p>作为一名前端，如果没用过 Prototype, 那么恭喜你，说明你还年轻，潜力无限。来看一名老前端的吐槽：</p>
+
+<ul>
+<li><a href="http://hax.iteye.com/blog/167131">Prototype 1.6 的超级符咒</a></li>
+</ul>
+<p>Prototype 目前已经 v1.7 了。从官方文档来看，Class 继承已经很成熟：</p>
+
+<ul>
+<li><a href="http://prototypejs.org/learn/class-inheritance">Defining classes and inheritance</a></li>
+</ul>
+<p><code>Class.create</code> 的写法已经比较优美。然而悲催的是，<code>$super</code> 的约定真让人无语。<code>super</code>
+虽然很难实现，但也不要这样实现呀：代码一压缩就都浮云了。</p>
+
+<h2>John Resig 的实现</h2>
+<p>jQuery 专注于 DOM 操作，因此无论现在还是以后，应该都不会去模拟类继承。但在风云变幻的年代里，jQuery
+作者 John Resig 也忍不住掺合一脚：</p>
+
+<ul>
+<li><a href="http://ejohn.org/blog/simple-javascript-inheritance/">Simple JavaScript Inheritance</a></li>
+</ul>
+<p>与 Base2 和 Prototype 相比，John Resig 的实现无疑更漂亮。<code>_super</code>
+的实现方案也简单有效，不过在 JavaScript 实现原生的 <code>class</code> 之前，所有 <code>super</code>
+方案都很难完美。比如：</p>
+<div class="highlight"><pre><span class="kd">var</span> <span class="nx">Animal</span> <span class="o">=</span> <span class="nx">Class</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span>
+    <span class="nx">talk</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+        <span class="nx">alert</span><span class="p">(</span><span class="s1">&#39;I am talking.&#39;</span><span class="p">);</span>
+    <span class="p">},</span>
+    <span class="nx">sleep</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+        <span class="nx">alert</span><span class="p">(</span><span class="s1">&#39;I am sleeping.&#39;</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">});</span>
+
+<span class="kd">var</span> <span class="nx">Dog</span> <span class="o">=</span> <span class="nx">Animal</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span>
+    <span class="nx">talk</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">_super</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="p">});</span>
+
+<span class="c1">// 在另一个文件里，扩展 Dog 对象：</span>
+<span class="nx">Dog</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">sleep</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">_super</span><span class="p">();</span> <span class="c1">// 会报错</span>
+<span class="p">};</span>
+</pre></div>
+<p>很明显，要使用 <code>_super</code>, 必须严格按照固定模式来写。面对灵活的 JavaScript, 所有 <code>super</code>
+都是美丽的谎言。</p>
+
+<h2>MooTools Class</h2>
+<p>MooTools 的全称是 My OO Tools, 有一套口碑很不错的 Class 机制：</p>
+
+<ul>
+<li><a href="http://mootools.net/docs/core/Class/Class">Class</a></li>
+</ul>
+<p><code>new Class</code> 的方式很优美，<code>Extends</code> 和 <code>Implements</code> 的首字母大写，看习惯了也觉得挺好。</p>
+<p><code>Class</code> 和所创建的类上，也都有 <code>extend</code> 方法，与 John Resig 版本相同。</p>
+<p><code>super</code> 语法糖，MooTools 采用了 <code>this.parent()</code> 的形式。原理与 John Resig
+的差不多，都是采用 <code>wrap</code> 的方式，但 MooTools 利用了非标准属性 <code>caller</code> 来实现。</p>
+<p>所有 <code>wrap</code> 的实现方式，都要求使用者彻底忘记 <code>prototype</code>. 以下代码在 MooTools 里也会出问题：</p>
+<div class="highlight"><pre><span class="nx">Dog</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">sleep</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">parent</span><span class="p">();</span> <span class="c1">// 会报错</span>
+<span class="p">};</span>
+</pre></div>
+<p>在 MooTools 里，需要这样写：</p>
+<div class="highlight"><pre><span class="nx">Dog</span><span class="p">.</span><span class="nx">implement</span><span class="p">({</span>
+    <span class="nx">sleep</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">parent</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="p">});</span>
+</pre></div>
+
+<h2>还有很多很多</h2>
+<p>JavaScript 的世界里，OO 的实现还有很多很多，比较有名气的还有：</p>
+
+<ul>
+<li><a href="http://joose.it/">Joose</a></li>
+<li><a href="http://jsclass.jcoglan.com/inheritance.html">JS Class</a></li>
+<li><a href="http://dojotoolkit.org/reference-guide/1.7/dojo/declare.html#dojo-declare">Dojo</a></li>
+<li><a href="https://github.com/ded/klass">Klass</a></li>
+<li><a href="http://documentcloud.github.com/backbone/#Model-extend">Backbone.Model.extend</a></li>
+</ul>
+<p>还有一个很有意思、崇尚组合的：<a href="http://soft.vub.ac.be/~tvcutsem/traitsjs/">Traits.js</a></p>
+<p>实现方式上都大同小异，有兴趣的可以逐一看看。</p>
+<p>写文档比写代码还累呀，终于快接近尾声了 —— 最重要的尾声部分。如果你在家里的话，强烈建议去洗把冷水脸，清爽一下后再来看。</p>
+
+<h2>我们的选择</h2>
+<p>Arale 2.0 的核心设计原则是 KISS：</p>
+
+<ol>
+<li>如无必要，勿增实体 —— Simple</li>
+<li>一目了然，容易学习 —— Stupid</li>
+</ol>
+<p>这两个原则是我们选择的权衡点。从 Simple 原则出发，<code>Y.extend</code> 就很好了。但从 Stupid
+的原则考虑，明显 <code>Class.create</code> 的形式更一目了然，同时在功能上也具有 <code>Y.extend</code> 的简洁实用性。</p>
+<p>权衡考虑后，我们选择 <code>Class.create</code> 风格，部分细节考虑如下：</p>
+
+<ol>
+<li>主要 API 与 MooTools 保持一致，但不用 <code>new Class</code>, 而用 <code>Class.create</code> 和 <code>SomeClass.extend</code>。</li>
+<li><code>Implements</code> 接收的参数就是普通对象，与 <code>implement</code> 方法保持一致。MooTools 中 <code>Implements</code> 属性需要是类。</li>
+<li>去除 <code>this.parent()</code> 语法糖，需要调用时，和 Backbone 类似，推荐直接使用 <code>SuperClass.prototype.methodName</code> 来调用。</li>
+<li>为了方便调用父类中的方法，提供 <code>superclass</code> 语法糖，与 YUI 类似。</li>
+</ol>
+<p>欢迎交流反馈。</p>
+
+
+            </div>
+        </div>
+        <hr class="end" />
+    </body>
+</html>

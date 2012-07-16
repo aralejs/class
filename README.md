@@ -162,20 +162,9 @@ var Dog = Class(Animal).extend({
 ```
 
 
-## 测试用例
-
-- <http://aralejs.org/lib/class/tests/runner.html>
-
-
 ## 性能对比
 
 - <http://jsperf.com/class-perfs>
-
-
-## 调研文档
-
-- [OO 模拟那些事儿](class/docs/competitors.md)
-- [类与模块](class/docs/meta.md)
 
 
 ## 交流讨论
