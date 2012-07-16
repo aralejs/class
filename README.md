@@ -8,7 +8,7 @@
 
 ## 模块依赖
 
- - [seajs](seajs/README.md)
+- seajs
 
 
 ## 使用说明
