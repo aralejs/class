@@ -76,12 +76,15 @@
 }
 #side-nav a {
     display: block;
-    margin: 10px 0 20px;
-    padding-right: 10px;
-    border: none;
+    padding: 10px 10px 10px 0;
     text-align: right;
     font-family: Vedana;
     font-size:18px;
+    border:none;
+    border-right: 3px solid #FFF;
+}
+#side-nav a:hover {
+    border-right: 3px solid #FD5A83;
 }
 #footer {
     text-align: center;
