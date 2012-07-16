@@ -69,12 +69,15 @@
 #side-nav {
     position: absolute;
     width: 150px;
-    top: 50px;
-    left: -150px;
+    top: 20px;
+    left: -180px;
+    padding-bottom: 40px;
+    border-right: 5px solid #999;
 }
 #side-nav a {
     display: block;
     margin: 10px 0 20px;
+    padding-right: 10px;
     border: none;
     text-align: right;
     font-family: Vedana;
