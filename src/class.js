@@ -1,4 +1,4 @@
-define(function() {
+define(function(require, exports, module) {
 
   // Class
   // -----------------
@@ -18,6 +18,8 @@ define(function() {
       return classify(o)
     }
   }
+
+  module.exports = Class
 
 
   // Create a new Class.
@@ -100,6 +102,7 @@ define(function() {
 
   // Mutators define special properties.
   Class.Mutators = {
+
     'Extends': function(parent) {
       var existed = this.prototype
       var proto = createProto(parent.prototype)
@@ -116,6 +119,9 @@ define(function() {
       // Set a convenience property in case the parent's prototype is
       // needed later.
       this.superclass = parent.prototype
+
+      // Add module meta information in sea.js environment.
+      addMeta(proto)
     },
 
     'Implements': function(items) {
@@ -193,5 +199,26 @@ define(function() {
       }
 
 
-  return Class
+  var getCompilingModule = module.constructor._getCompilingModule
+
+  function addMeta(proto) {
+    if (!getCompilingModule) return
+
+    var compilingModule = getCompilingModule()
+    if (!compilingModule) return
+
+    var filename = compilingModule.uri.split(/[\/\\]/).pop()
+
+    if (Object.defineProperties) {
+      Object.defineProperties(proto, {
+        __module: { value: compilingModule },
+        __filename: { value: filename }
+      })
+    }
+    else {
+      proto.__module = compilingModule
+      proto.__filename = filename
+    }
+  }
+
 })
