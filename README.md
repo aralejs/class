@@ -167,6 +167,12 @@ var Dog = Class(Animal).extend({
 - <http://jsperf.com/class-perfs>
 
 
+## 参考文档
+
+- [OO 模拟那些事儿](http://aralejs.org/class/dist/docs/competitors.html)
+- [类与模块](http://aralejs.org/class/dist/docs/meta.html)
+
+
 ## 交流讨论
 
 欢迎创建
