@@ -1,0 +1,110 @@
+<!DOCTYPE HTML>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Class</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0" />
+        <link rel="stylesheet" href="http://aralejs.org/assets/base.css" />
+        <link rel="stylesheet" href="http://aralejs.org/assets/style.css" />
+        <link rel="stylesheet" href="http://aralejs.org/assets/pygments.css" />
+        <link rel="stylesheet" href="http://aralejs.org/assets/fontawesome/css/font-awesome.css" />
+        <script src="http://seajs.org/dist/sea.js"></script>
+        
+        
+        <!--[if lt IE 9]>
+        <script type="text/javascript" src="http://aralejs.org/assets/html5shiv.js"></script>
+        <![endif]-->
+    </head>
+    <body>
+        <header id="header">
+            <div class="container fn-clear">
+
+    <a href="../../dist/"  class="current">Class</a>
+    
+    
+    <a id="nav-test" target="_blank" href="../../tests/runner.html">Tests</a>
+    
+
+
+                <nav role="navigation" id="nav">
+                    <a class="icon-home" title="Home" href="/" id="logo">首页</a>
+                    <a class="icon-github" href="https://github.com/aralejs/class">源码</a>
+                </nav>
+            </div>
+        </header>
+
+        <div id="main">
+            <div class="container">
+
+<nav id="side-nav">
+    <a href="../../dist/">README</a>    
+    
+    <a href="../../dist/docs/competitors.html">competitors</a>
+    
+    <a href="../../dist/docs/meta.html">meta</a>
+    
+</nav>
+
+<div class="markdown-body">
+    <h1>类与模块</h1>
+<p>在 SeaJS 倡导的模块体系里，推荐一个文件一个模块。这样，我们经常会如下组织代码：</p>
+<div class="highlight"><pre><span class="cm">/* animal.js */</span>
+<span class="nx">define</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">require</span><span class="p">,</span> <span class="nx">exports</span><span class="p">,</span> <span class="nx">module</span><span class="p">)</span> <span class="p">{</span>
+    <span class="p">...</span>
+    <span class="kd">var</span> <span class="nx">Animal</span> <span class="o">=</span> <span class="nx">Class</span><span class="p">.</span><span class="nx">create</span><span class="p">(...);</span>
+    <span class="p">...</span>
+<span class="p">});</span>
+</pre></div>
+<div class="highlight"><pre><span class="cm">/* dog.js */</span>
+<span class="nx">define</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">require</span><span class="p">,</span> <span class="nx">exports</span><span class="p">,</span> <span class="nx">module</span><span class="p">)</span> <span class="p">{</span>
+    <span class="p">...</span>
+    <span class="kd">var</span> <span class="nx">Dog</span> <span class="o">=</span> <span class="nx">Animal</span><span class="p">.</span><span class="nx">extend</span><span class="p">(...);</span>
+    <span class="p">...</span>
+<span class="p">});</span>
+</pre></div>
+<div class="highlight"><pre><span class="cm">/* collie.js */</span>
+<span class="nx">define</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">require</span><span class="p">,</span> <span class="nx">exports</span><span class="p">,</span> <span class="nx">module</span><span class="p">)</span> <span class="p">{</span>
+    <span class="p">...</span>
+    <span class="kd">var</span> <span class="nx">Collie</span> <span class="o">=</span> <span class="nx">Dog</span><span class="p">.</span><span class="nx">extend</span><span class="p">(...);</span>
+    <span class="p">...</span>
+<span class="p">});</span>
+</pre></div>
+<p>我们在调试代码时，经常会使用 <code>console.dir</code> 来查看某个实例的来龙去脉：</p>
+<div class="highlight"><pre><span class="cm">/* test.js */</span>
+<span class="nx">define</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">require</span><span class="p">,</span> <span class="nx">exports</span><span class="p">,</span> <span class="nx">module</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">Collie</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;./collie&#39;</span><span class="p">);</span>
+
+    <span class="kd">var</span> <span class="nx">collie</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Collie</span><span class="p">(...);</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">dir</span><span class="p">(</span><span class="nx">collie</span><span class="p">);</span>
+<span class="p">});</span>
+</pre></div>
+<p>大部分类库的 OO 实现方式，上面的代码在 <code>console</code> 中的输出都很难直接看出 <code>collie</code>
+的继承关系。比如使用 MooTools 时，输出如下：</p>
+<p><img src="../assets/mootools-collie.png?raw=true" alt="../assets/mootools-collie.png"/></p>
+<p>在 SeaJS 环境下，通过 <code>Class.create</code> 或 <code>Base.extend</code> 创建类时，可以通过
+<code>seajs.getActiveModule</code> 方法将类与模块关联起来，这样，可以得到下面的输出：</p>
+
+<pre><code>&gt; console.dir(collie)
+  ▼ Object
+     ▼ __proto__: Object
+       __meta__: 'path/to/collie.js'
+       ▼ __proto__: Object
+         __meta__: 'path/to/dog.js'
+         ▼ __proto__: Object
+           __meta__: 'path/to/animal.js'</code></pre>
+<p>这样可以比较清晰地看到 <code>collie</code> 的父类关系，并能直接定位到相应的文件，方便调试。</p>
+<p>将 SeaJS 提供的信息，与 <code>Class.create</code> 方法打通，还可以进一步提供更多元信息，不仅方便调试，也能利用这些元信息，生成模块关系图等。</p>
+
+<h2>感谢</h2>
+
+<ul>
+<li>李牧对该问题的研究：<a href="http://limu.iteye.com/blog/1136712">扩展 SeaJS 模块定义中的 module 参数的应用示例</a></li>
+</ul>
+
+</div>
+
+            </div>
+        </div>
+        <hr class="end" />
+    </body>
+</html>
