@@ -43,27 +43,27 @@ define(function(require, exports, module) {
 ```
 
 大部分类库的 OO 实现方式，上面的代码在 `console` 中的输出都很难直接看出 `collie`
-的继承关系。比如使用 MooTools 时，输出如下：
+的继承关系。
 
-![../assets/mootools-collie.png](../assets/mootools-collie.png?raw=true)
-
-在 SeaJS 环境下，通过 `Class.create` 或 `Base.extend` 创建类时，可以通过
-`seajs.getActiveModule` 方法将类与模块关联起来，这样，可以得到下面的输出：
+在 SeaJS 环境下，通过 `Class.create` 或 `Base.extend` 创建类时，可以通过内部的
+`_getCompilingModule` 方法将类与模块关联起来。这样，我们就可以得到下面的输出：
 
 ```
 > console.dir(collie)
   ▼ Object
      ▼ __proto__: Object
-       __meta__: 'path/to/collie.js'
+       __filename: 'collie.js'
+       __module: Object
        ▼ __proto__: Object
-         __meta__: 'path/to/dog.js'
+         __filename: 'dog.js'
+         __module: Object
          ▼ __proto__: Object
-           __meta__: 'path/to/animal.js'
+           __filename: 'animal.js'
+           __module: Object
 ```
 
-这样可以比较清晰地看到 `collie` 的父类关系，并能直接定位到相应的文件，方便调试。
-
-将 SeaJS 提供的信息，与 `Class.create` 方法打通，还可以进一步提供更多元信息，不仅方便调试，也能利用这些元信息，生成模块关系图等。
+通过 `__filename` 属性，可以比较清晰地看到 `collie` 的父类关系，并能直接定位到相应的文件，方便调试。还可以通过
+`__module` 属性，来得到相关的模块信息，利用这些元信息，可以进一步生成模块关系图等等。
 
 
 ## 感谢
