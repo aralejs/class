@@ -1,6 +1,7 @@
 {
     "name": "class",
     "version": "1.0.0",
+    "description": "提供简洁的 OO 实现。",
     "tag": "infrastructure",
     "output": {
         "class.js": "."

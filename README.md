@@ -6,11 +6,6 @@
 ---
 
 
-## 模块依赖
-
-- seajs
-
-
 ## 使用说明
 
 
@@ -166,15 +161,3 @@ var Dog = Class(Animal).extend({
 
 - <http://jsperf.com/class-perfs>
 
-
-## 参考文档
-
-- [OO 模拟那些事儿](http://aralejs.org/class/docs/competitors.html)
-- [类与模块](http://aralejs.org/class/docs/meta.html)
-
-
-## 交流讨论
-
-欢迎创建
-[GitHub Issue](https://github.com/aralejs/class/issues/new)
-来提交反馈。
