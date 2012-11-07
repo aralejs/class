@@ -1,4 +1,4 @@
-define("#class/1.0.0/class-debug", [], function(require, exports, module) {
+define("arale/class/1.1.0/class-debug", [], function(require, exports, module) {
 
   // Class
   // -----------------
