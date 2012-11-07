@@ -1,59 +1,48 @@
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
-<title>Class</title>
-<link rel="stylesheet" href="http://aralejs.org/assets/base.css">
-<link rel="stylesheet" href="http://aralejs.org/assets/style.css">
-<link rel="stylesheet" href="http://aralejs.org/assets/pygments.css">
-<script src="http://seajs.org/dist/sea.js"></script>
-<script src="http://aralejs.org/tools/seajs-helper.js"></script>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
+    <title>Class - OO 模拟那些事儿</title><link rel="stylesheet" href="http://alipay.github.com/liquidluck-theme-arale/assets/app.min.css">
+    <link rel="shortcut icon" href="http://alipay.github.com/liquidluck-theme-arale/assets/favicon.ico" type="image/x-icon" />
+    <script src="http://seajs.org/dist/sea.js"></script>
+    <script src="http://alipay.github.com/liquidluck-theme-arale/tools/arale-helper.js"></script>
+    <!--[if lt IE 9]>
+      <script src="http://alipay.github.com/liquidluck-theme-arale/assets/html5shiv.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <header id="header">
+      <div class="container">
+        <a title="Home" class="icon-home" href="/" id="logo">Arale</a>
+        <div class="wrapper fn-clear">
+          
+          <nav class="global-nav" role="navigation">
+            <ul class="fn-clear">
+              <li class="developer-guides"><a href="/developer-guides/">开发指南</a></li>
+              <li class="user-guides"><a href="/components/">组件文档</a> • <a style="padding-left:0;" href="/mapping.html">Map</a></li>
+            </ul>
+          </nav>
+          <nav class="top-nav" role="navigation">
+            <ul class="fn-clear">
+              <li class="first"><a target="_blank" href="http://seajs.org">SeaJS</a></li>
+              <li class="last"><a target="_blank" href="https://github.com/seajs/spm/wiki">SPM</a></li>
+            </ul>
+          </nav>
+          
+        </div>
+      </div>
+    </header>
 
-
-<!--[if lt IE 9]>
-<script src="http://aralejs.org/assets/html5shiv.js"></script>
-<![endif]-->
-</head>
-<body>
-<header id="header">
-    <div class="container fn-clear">
-
-    <a href="../"  class="current">Class</a>
-    
-    
-    <a id="nav-test" href="../tests/runner.html">用例</a>
-    
-
-
-        <nav role="navigation" id="nav">
-            <a title="Home" class="icon-home" href="/" id="logo">首页</a>
-            <a id="code-link" class="icon-github" href="https://github.com/aralejs/class">源码</a>
-        </nav>
-    </div>
-</header>
-
-<div id="main">
-    <div class="container">
-<div class="document-body">
-  
-  <nav id="side-nav">
-    <a href="../">README</a>
-    
-    <a href="../docs/competitors.html">competitors</a>
-    
-    <a href="../docs/module-meta.html">module-meta</a>
-    
-  </nav>
-  
-
-  <div class="markdown-body">
-    <h1>OO 模拟那些事儿</h1>
+    <div id="main">
+      <div class="container fn-clear">
+<div class="markdown-body">
+  <h1 class="entry-title"><a id="back-to-module" href="../">Class</a> - OO 模拟那些事儿</h1>
+  <blockquote>
 <p>感谢所有老前辈们，感谢所有同类代码。因为有了你们，世界才丰富多采。</p>
+</blockquote>
 
-<hr/>
-
-<h2>Douglas Crockford 的尝试与悟道</h2>
+<h2 id="toc_0">Douglas Crockford 的尝试与悟道</h2>
 <p>关于类继承，Douglas 有一篇经典文章：</p>
 
 <ul>
@@ -116,7 +105,7 @@ JavaScript 中支持类模型的尝试是一个错误。</p>
 </pre></div>
 <p>上面的代码，你知道问题在哪吗？请继续阅读。</p>
 
-<h2>YUI 之路</h2>
+<h2 id="toc_1">YUI 之路</h2>
 <p>YUI 团队是 Douglas 的铁杆粉丝团。从 YUI2 到 YUI3, 都高度贯彻了 Douglas 的精神。在 YUI
 里，提供了 <code>extend</code> 方法：</p>
 <div class="highlight"><pre><span class="kd">function</span> <span class="nx">Animal</span><span class="p">()</span> <span class="p">{}</span>
@@ -164,7 +153,7 @@ JavaScript 中支持类模型的尝试是一个错误。</p>
 <p><strong>注</strong>：YUI3 里，除了 <code>extend</code> 方式，也提供了 <code>Base.create</code>
 来创建新类，但是该方法比较重量级了，用起来不轻便。</p>
 
-<h2>Dean Edwards 的 Base.js</h2>
+<h2 id="toc_2">Dean Edwards 的 Base.js</h2>
 <p>Dean Edwards 是前端界的一位老前辈。老前辈做过一个当时很著名的 JavaScript 类库：
 Base.js, 其中有一套非常不错的 OO 实现：</p>
 
@@ -174,7 +163,7 @@ Base.js, 其中有一套非常不错的 OO 实现：</p>
 <p>这个方案开辟了一条阳光大道：通过精心构造的 <code>Base</code> 基类来实现类继承。同一时期，JavaScript
 界 OO 模拟蔚然成风，万马奔腾。让我们继续考考古。</p>
 
-<h2>Prototype 的 Class</h2>
+<h2 id="toc_3">Prototype 的 Class</h2>
 <p>作为一名前端，如果没用过 Prototype, 那么恭喜你，说明你还年轻，潜力无限。来看一名老前端的吐槽：</p>
 
 <ul>
@@ -188,7 +177,7 @@ Base.js, 其中有一套非常不错的 OO 实现：</p>
 <p><code>Class.create</code> 的写法已经比较优美。然而悲催的是，<code>$super</code> 的约定真让人无语。<code>super</code>
 虽然很难实现，但也不要这样实现呀：代码一压缩就都浮云了。</p>
 
-<h2>John Resig 的实现</h2>
+<h2 id="toc_4">John Resig 的实现</h2>
 <p>jQuery 专注于 DOM 操作，因此无论现在还是以后，应该都不会去模拟类继承。但在风云变幻的年代里，jQuery
 作者 John Resig 也忍不住掺合一脚：</p>
 
@@ -221,7 +210,7 @@ Base.js, 其中有一套非常不错的 OO 实现：</p>
 <p>很明显，要使用 <code>_super</code>, 必须严格按照固定模式来写。面对灵活的 JavaScript, 所有 <code>super</code>
 都是美丽的谎言。</p>
 
-<h2>MooTools Class</h2>
+<h2 id="toc_5">MooTools Class</h2>
 <p>MooTools 的全称是 My OO Tools, 有一套口碑很不错的 Class 机制：</p>
 
 <ul>
@@ -244,7 +233,7 @@ Base.js, 其中有一套非常不错的 OO 实现：</p>
 <span class="p">});</span>
 </pre></div>
 
-<h2>还有很多很多</h2>
+<h2 id="toc_6">还有很多很多</h2>
 <p>JavaScript 的世界里，OO 的实现还有很多很多，比较有名气的还有：</p>
 
 <ul>
@@ -254,11 +243,11 @@ Base.js, 其中有一套非常不错的 OO 实现：</p>
 <li><a href="https://github.com/ded/klass">Klass</a></li>
 <li><a href="http://documentcloud.github.com/backbone/#Model-extend">Backbone.Model.extend</a></li>
 </ul>
-<p>还有一个很有意思、崇尚组合的：<a href="http://soft.vub.ac.be/~tvcutsem/traitsjs/">Traits.js</a></p>
+<p>还有一个很有意思、崇尚组合的：<a href="http://soft.vub.ac.be/%7Etvcutsem/traitsjs/">Traits.js</a></p>
 <p>实现方式上都大同小异，有兴趣的可以逐一看看。</p>
 <p>写文档比写代码还累呀，终于快接近尾声了 —— 最重要的尾声部分。如果你在家里的话，强烈建议去洗把冷水脸，清爽一下后再来看。</p>
 
-<h2>我们的选择</h2>
+<h2 id="toc_7">我们的选择</h2>
 <p>Arale 2.0 的核心设计原则是 KISS：</p>
 
 <ol>
@@ -277,12 +266,18 @@ Base.js, 其中有一套非常不错的 OO 实现：</p>
 </ol>
 <p>欢迎交流反馈。</p>
 
-  </div>
 </div>
-
+<div class="sidebar sidebar-components"></div>
+      </div>
     </div>
-</div>
-<hr class="end">
-<script src="http://aralejs.org/tools/nico-helper.js"></script>
-</body>
+
+    <footer id="footer">
+      <div class="container">
+        <div class="copyright">
+          <p>&copy; 2012 aralejs.org</p>
+          <p>除非另有声明，本站所有代码遵循 MIT 协议</p>
+        </div>
+      </div>
+    </footer>
+  </body>
 </html>
