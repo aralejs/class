@@ -5,5 +5,6 @@
     "tag": "infrastructure",
     "output": {
         "class.js": "."
-    }
+    },
+    "tests": ["class"]
 }

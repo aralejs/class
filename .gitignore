@@ -15,3 +15,5 @@ Thumbs.db
 *.swp
 *.pyc
 *.pyo
+_site
+sea-modules
