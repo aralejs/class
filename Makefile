@@ -1,5 +1,9 @@
 THEME = $(HOME)/.liquidluck-themes/arale2
 
+
+build:
+	spm build -v
+
 doc:
 	liquidluck build -v -s $(THEME)/settings.yml
 
