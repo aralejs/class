@@ -3,6 +3,9 @@
 
 ---
 
+[![Build Status](https://secure.travis-ci.org/aralejs/class.png)](https://travis-ci.org/aralejs/class)
+
+
 提供简洁的 OO 实现。
 
 ---
