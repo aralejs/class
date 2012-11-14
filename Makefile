@@ -1,8 +1,13 @@
-build:
-	liquidluck build -v -s $(HOME)/.liquidluck-themes/arale2/settings.yml
+THEME = $(HOME)/.liquidluck-themes/arale2
+
+doc:
+	liquidluck build -v -s $(THEME)/settings.yml
 
 debug:
-	liquidluck server -d -s $(HOME)/.liquidluck-themes/arale2/settings.yml
+	liquidluck server -d -s $(THEME)/settings.yml
 
 server:
-	liquidluck server -s $(HOME)/.liquidluck-themes/arale2/settings.yml
+	liquidluck server -s $(THEME)/settings.yml
+
+test:
+	phantomjs $(THEME)/static/js/run_jasmine_test.coffee http://127.0.0.1:8000/tests/runner.html
