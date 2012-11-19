@@ -1,11 +1,12 @@
 define(function(require) {
 
   var Class = require('../src/class')
+  var expect = chai.expect
 
 
   describe('Class', function() {
 
-    test('Class.create(parent)', function() {
+    it('Class.create(parent)', function() {
       function Animal(name) {
         this.name = name
       }
@@ -17,23 +18,23 @@ define(function(require) {
       var Dog = Class.create(Animal)
       var dog = new Dog('Jack')
 
-      expect(dog.constructor).toBe(Dog)
-      expect(dog.name).toBe('Jack')
-      expect(dog.getName()).toBe('Jack')
+      expect(dog.constructor).to.equal(Dog)
+      expect(dog.name).to.equal('Jack')
+      expect(dog.getName()).to.equal('Jack')
     })
 
-    test('Class.create(null)', function() {
+    it('Class.create(null)', function() {
       var Dog = Class.create(null)
       var dog = new Dog()
-      expect(dog.constructor).toBe(Dog)
-      expect(Dog.superclass.constructor).toBe(Class)
+      expect(dog.constructor).to.equal(Dog)
+      expect(Dog.superclass.constructor).to.equal(Class)
 
       Dog = Class.create()
       new Dog()
-      expect(Dog.superclass.constructor).toBe(Class)
+      expect(Dog.superclass.constructor).to.equal(Class)
     })
 
-    test('Class.create(parent, properties)', function() {
+    it('Class.create(parent, properties)', function() {
       function Animal(name) {
         this.name = name
       }
@@ -49,11 +50,11 @@ define(function(require) {
       })
       var dog = new Dog('Jack')
 
-      expect(dog.name).toBe('Jack')
-      expect(dog.talk()).toBe('I am Jack')
+      expect(dog.name).to.equal('Jack')
+      expect(dog.talk()).to.equal('I am Jack')
     })
 
-    test('call initialize method properly', function() {
+    it('call initialize method properly', function() {
       var counter = 0
 
       var Animal = Class.create({
@@ -71,7 +72,7 @@ define(function(require) {
       new Dog()
 
       // Dog 有 initialize 时，只调用 Dog 的 initialize
-      expect(counter).toBe(1)
+      expect(counter).to.equal(1)
 
       counter = 0
       Dog = Class.create(Animal)
@@ -79,10 +80,10 @@ define(function(require) {
       new Dog()
 
       // Dog 没有 initialize 时，会自动调用父类中最近的 initialize
-      expect(counter).toBe(1)
+      expect(counter).to.equal(1)
     })
 
-    test('pass arguments to initialize method properly', function() {
+    it('pass arguments to initialize method properly', function() {
 
       var Animal = Class.create({
         initialize: function(firstName, lastName) {
@@ -97,10 +98,10 @@ define(function(require) {
 
       var bird = new Bird('Frank', 'Wang')
 
-      expect(bird.fullName).toBe('Frank Wang')
+      expect(bird.fullName).to.equal('Frank Wang')
     })
 
-    test('superclass', function() {
+    it('superclass', function() {
       var counter = 0
 
       var Animal = Class.create({
@@ -123,11 +124,11 @@ define(function(require) {
 
       var dog = new Dog()
 
-      expect(counter).toBe(1)
-      expect(dog.talk()).toBe('I am an animal')
+      expect(counter).to.equal(1)
+      expect(dog.talk()).to.equal('I am an animal')
     })
 
-    test('Extends', function() {
+    it('Extends', function() {
       function Animal(name) {
         this.name = name
       }
@@ -145,12 +146,12 @@ define(function(require) {
 
       var dog = new Dog('Jack')
 
-      expect(dog.name).toBe('Jack')
-      expect(dog.getName()).toBe('Jack')
-      expect(dog.talk()).toBe('I am Jack')
+      expect(dog.name).to.equal('Jack')
+      expect(dog.getName()).to.equal('Jack')
+      expect(dog.talk()).to.equal('I am Jack')
     })
 
-    test('Implements', function() {
+    it('Implements', function() {
       var Animal = Class.create(function(name) {
         this.name = name
       }, {
@@ -179,13 +180,13 @@ define(function(require) {
 
       var dog = new Dog('Jack')
 
-      expect(dog.name).toBe('Jack')
-      expect(dog.getName()).toBe('Jack')
-      expect(dog.fly()).toBe('I am flying')
-      expect(dog.talk()).toBe('I am Jack')
+      expect(dog.name).to.equal('Jack')
+      expect(dog.getName()).to.equal('Jack')
+      expect(dog.fly()).to.equal('I am flying')
+      expect(dog.talk()).to.equal('I am Jack')
     })
 
-    test('Statics', function() {
+    it('Statics', function() {
       var Dog = Class.create({
         initialize: function(name) {
           this.name = name
@@ -197,11 +198,11 @@ define(function(require) {
 
       var dog = new Dog('Jack')
 
-      expect(dog.name).toBe('Jack')
-      expect(Dog.COLOR).toBe('red')
+      expect(dog.name).to.equal('Jack')
+      expect(Dog.COLOR).to.equal('red')
     })
 
-    test('statics inherited from parent', function() {
+    it('statics inherited from parent', function() {
       var Animal = Class.create()
       Animal.LEGS = 4
 
@@ -217,18 +218,18 @@ define(function(require) {
         }
       })
 
-      expect(Dog.LEGS).toBe(4)
-      expect(Dog.COLOR).toBe('red')
+      expect(Dog.LEGS).to.equal(4)
+      expect(Dog.COLOR).to.equal('red')
 
       var Pig = Class.create(Class)
 
-      expect(typeof Pig.implement).toBe('function')
-      expect(typeof Pig.extend).toBe('function')
-      expect(typeof Pig.Mutators).toBe('undefined')
-      expect(typeof Pig.create).toBe('undefined')
+      expect(typeof Pig.implement).to.equal('function')
+      expect(typeof Pig.extend).to.equal('function')
+      expect(typeof Pig.Mutators).to.equal('undefined')
+      expect(typeof Pig.create).to.equal('undefined')
     })
 
-    test('Class.extend', function() {
+    it('Class.extend', function() {
       var Dog = Class.extend({
         initialize: function(name) {
           this.name = name
@@ -237,11 +238,11 @@ define(function(require) {
 
       var dog = new Dog('Jack')
 
-      expect(dog.name).toBe('Jack')
-      expect(Dog.superclass.constructor).toBe(Class)
+      expect(dog.name).to.equal('Jack')
+      expect(Dog.superclass.constructor).to.equal(Class)
     })
 
-    test('SubClass.extend', function() {
+    it('SubClass.extend', function() {
       var Animal = Class.create(function(name) {
         this.name = name
       })
@@ -249,11 +250,11 @@ define(function(require) {
       var Dog = Animal.extend()
       var dog = new Dog('Jack')
 
-      expect(dog.name).toBe('Jack')
-      expect(Dog.superclass.constructor).toBe(Animal)
+      expect(dog.name).to.equal('Jack')
+      expect(Dog.superclass.constructor).to.equal(Animal)
     })
 
-    test('SubClass.implement', function() {
+    it('SubClass.implement', function() {
       var Animal = Class.create(function(name) {
         this.name = name
       })
@@ -267,12 +268,12 @@ define(function(require) {
 
       var dog = new Dog('Jack')
 
-      expect(dog.name).toBe('Jack')
-      expect(dog.talk()).toBe('I am Jack')
-      expect(Dog.superclass.constructor).toBe(Animal)
+      expect(dog.name).to.equal('Jack')
+      expect(dog.talk()).to.equal('I am Jack')
+      expect(Dog.superclass.constructor).to.equal(Animal)
     })
 
-    test('convert existed function to Class', function() {
+    it('convert existed function to Class', function() {
       function Dog(name) {
         this.name = name
       }
@@ -285,8 +286,8 @@ define(function(require) {
 
       var dog = new Dog('Jack')
 
-      expect(dog.name).toBe('Jack')
-      expect(dog.getName()).toBe('Jack')
+      expect(dog.name).to.equal('Jack')
+      expect(dog.getName()).to.equal('Jack')
 
       var MyDog = Dog.extend({
         talk: function() {
@@ -295,10 +296,10 @@ define(function(require) {
       })
 
       var myDog = new MyDog('Frank')
-      expect(myDog.name).toBe('Frank')
+      expect(myDog.name).to.equal('Frank')
     })
 
-    test('new AnotherClass() in initialize', function() {
+    it('new AnotherClass() in initialize', function() {
       var called = []
 
       var Animal = Class.create({
@@ -321,11 +322,11 @@ define(function(require) {
       })
 
       new Dog()
-      expect(called.join(' ')).toBe('Pig Dog')
+      expect(called.join(' ')).to.equal('Pig Dog')
 
     })
 
-    test('StaticsWhiteList', function() {
+    it('StaticsWhiteList', function() {
 
       var A = Class.create()
       A.a = 1
@@ -333,22 +334,22 @@ define(function(require) {
       A.StaticsWhiteList = ['a']
       var B = A.extend(A)
 
-      expect(B.a).toBe(1)
-      expect(B.b).toBe(undefined)
-      expect(B.StaticsWhiteList).toBe(undefined)
+      expect(B.a).to.equal(1)
+      expect(B.b).to.equal(undefined)
+      expect(B.StaticsWhiteList).to.equal(undefined)
 
     })
 
-    test('Meta information', function() {
+    it('Meta information', function() {
 
       var Dog = require('./data/dog')
       var dog = new Dog()
       seajs.log(dog, 'dir')
 
-      expect(dog.isAnimal).toBe(true)
-      expect(dog.isDog).toBe(true)
-      expect(dog.__filename).toBe('dog.js')
-      expect(dog.__module.dependencies.length).toBe(1)
+      expect(dog.isAnimal).to.equal(true)
+      expect(dog.isDog).to.equal(true)
+      expect(dog.__filename).to.equal('dog.js')
+      expect(dog.__module.dependencies.length).to.equal(1)
 
     })
 
