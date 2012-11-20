@@ -1,8 +1,5 @@
 define(function(require) {
-
   var Class = require('../src/class')
-  var expect = chai.expect
-
 
   describe('Class', function() {
 
