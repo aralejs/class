@@ -1,17 +1,35 @@
-THEME = $(HOME)/.liquidluck-themes/arale2
+THEME = $(HOME)/.spm/themes/arale
 
-
-build:
-	spm build -v
-
-doc:
-	liquidluck build -v -s $(THEME)/settings.yml
+build-doc:
+	@nico build -v -C $(THEME)/nico.js
 
 debug:
-	liquidluck server -d -s $(THEME)/settings.yml
+	@nico server -v -C $(THEME)/nico.js --watch debug
 
 server:
-	liquidluck server -s $(THEME)/settings.yml
+	@nico server -v -C $(THEME)/nico.js
 
+watch:
+	@nico server -v -C $(THEME)/nico.js --watch
+
+publish: clean build-doc
+	@ghp-import _site
+	@git push origin gh-pages
+
+clean:
+	@rm -fr _site
+
+
+reporter = spec
+url = tests/runner.html
 test:
-	phantomjs $(THEME)/static/js/run_jasmine_test.coffee http://127.0.0.1:8000/tests/runner.html
+	@mocha-phantomjs --reporter=${reporter} http://127.0.0.1:8000/$(url)
+
+coverage:
+	@rm -fr _site/src-cov
+	@jscoverage --encoding=utf8 src _site/src-cov
+	@$(MAKE) test reporter=json-cov url=tests/runner.html?coverage=1 | node $(THEME)/html-cov.js > coverage.html
+	@echo "Build coverage to coverage.html"
+
+
+.PHONY: build-doc debug server publish clean test coverage
