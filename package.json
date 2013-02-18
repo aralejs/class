@@ -1,19 +1,20 @@
 {
-    "name": "class",
-    "root": "arale",
-    "version": "1.0.0",
-    "tag": "infrastructure",
-    "description": "提供简洁的 OO 实现。",
-    "homepage": "http://aralejs.org/class/",
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/aralejs/class.git"
-    },
-    "bugs": {
-        "url": "https://github.com/aralejs/class/issues"
-    },
+  "name": "class",
+  "family": "arale",
+  "version": "1.0.0",
+  "keywords": ["infrastructure"],
+  "description": "提供简洁的 OO 实现。",
+  "homepage": "http://aralejs.org/class/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/aralejs/class.git"
+  },
+  "bugs": {
+    "url": "https://github.com/aralejs/class/issues"
+  },
+  "spm": {
     "output": {
-        "class.js": "."
-    },
-    "tests": ["class"]
+      "class.js": ["class.js"]
+    }
+  }
 }
