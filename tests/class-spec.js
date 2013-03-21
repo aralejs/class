@@ -1,5 +1,6 @@
 define(function(require) {
   var Class = require('../src/class')
+  var expect = require('expect')
 
   describe('Class', function() {
 
