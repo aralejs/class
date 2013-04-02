@@ -119,9 +119,6 @@ define(function(require, exports, module) {
       // Set a convenience property in case the parent's prototype is
       // needed later.
       this.superclass = parent.prototype
-
-      // Add module meta information in sea.js environment.
-      addMeta(proto)
     },
 
     'Implements': function(items) {
@@ -197,28 +194,4 @@ define(function(require, exports, module) {
         }
         return -1
       }
-
-
-  var getCompilingModule = module.constructor._getCompilingModule
-
-  function addMeta(proto) {
-    if (!getCompilingModule) return
-
-    var compilingModule = getCompilingModule()
-    if (!compilingModule) return
-
-    var filename = compilingModule.uri.split(/[\/\\]/).pop()
-
-    if (Object.defineProperties) {
-      Object.defineProperties(proto, {
-        __module: { value: compilingModule },
-        __filename: { value: filename }
-      })
-    }
-    else {
-      proto.__module = compilingModule
-      proto.__filename = filename
-    }
-  }
-
 })

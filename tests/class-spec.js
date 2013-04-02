@@ -346,9 +346,6 @@ define(function(require) {
 
       expect(dog.isAnimal).to.equal(true)
       expect(dog.isDog).to.equal(true)
-      expect(dog.__filename).to.equal('dog.js')
-      expect(dog.__module.dependencies.length).to.equal(1)
-
     })
 
   })
