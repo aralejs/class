@@ -164,5 +164,5 @@ var Dog = Class(Animal).extend({
 
 ## 性能对比
 
-- <http://jsperf.com/class-perfs>
+- <http://jsperf.com/class-perfs/8>
 
