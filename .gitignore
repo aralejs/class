@@ -16,4 +16,6 @@ Thumbs.db
 *.pyc
 *.pyo
 _site
+_theme
 sea-modules
+node_modules
