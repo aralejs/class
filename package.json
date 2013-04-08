@@ -13,13 +13,6 @@
     "url": "https://github.com/aralejs/class/issues"
   },
   "spm": {
-    "devAlias": {
-      "mocha": "gallery/mocha/1.8.2/mocha",
-      "expect": "gallery/expect/0.2.0/expect"
-    },
-    "engines": {
-      "seajs": "seajs/seajs/2.0.0/sea"
-    },
     "output": ["class.js"]
   }
 }

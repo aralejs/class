@@ -12,9 +12,8 @@ server:
 watch:
 	@nico server -C $(THEME)/nico.js --watch
 
-publish: clean build-doc
-	@ghp-import _site
-	@git push origin gh-pages
+publish-doc: clean build-doc
+	@spm publish --doc _site
 
 clean:
 	@rm -fr _site
