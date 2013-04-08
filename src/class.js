@@ -170,12 +170,9 @@ define(function(require, exports, module) {
 
 
   var toString = Object.prototype.toString
-  var isArray = Array.isArray
 
-  if (!isArray) {
-    isArray = function(val) {
+  var isArray = Array.isArray || function(val) {
       return toString.call(val) === '[object Array]'
-    }
   }
 
   var isFunction = function(val) {

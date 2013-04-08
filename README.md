@@ -3,7 +3,7 @@
 
 ---
 
-[![Build Status](https://secure.travis-ci.org/aralejs/class.png)](https://travis-ci.org/aralejs/class)
+[![Build Status](https://secure.travis-ci.org/aralejs/class.png?branch=master)](https://travis-ci.org/aralejs/class)
 
 
 提供简洁的 OO 实现。
@@ -164,5 +164,5 @@ var Dog = Class(Animal).extend({
 
 ## 性能对比
 
-- <http://jsperf.com/class-perfs>
+- <http://jsperf.com/class-perfs/8>
 
