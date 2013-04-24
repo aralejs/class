@@ -1,9 +1,9 @@
-
 # Class
 
 ---
 
 [![Build Status](https://secure.travis-ci.org/aralejs/class.png?branch=master)](https://travis-ci.org/aralejs/class)
+[![Coverage Status](https://coveralls.io/repos/aralejs/class/badge.png?branch=master)](https://coveralls.io/r/aralejs/class)
 
 
 提供简洁的 OO 实现。
