@@ -4,7 +4,7 @@ build-doc:
 	@nico build -C $(THEME)/nico.js
 
 publish-doc: clean build-doc
-	@spm publish --doc _site
+	@spm publish --doc _site -s spmjs
 
 server:
 	@nico server -C $(THEME)/nico.js
