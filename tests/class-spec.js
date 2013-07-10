@@ -342,7 +342,7 @@ define(function(require) {
 
       var Dog = require('./data/dog')
       var dog = new Dog()
-      seajs.log(dog, 'dir')
+      //seajs.log(dog, 'dir')
 
       expect(dog.isAnimal).to.equal(true)
       expect(dog.isDog).to.equal(true)
