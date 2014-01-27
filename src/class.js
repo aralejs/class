@@ -15,7 +15,10 @@ define(function(require, exports, module) {
   function Class(o) {
     // Convert existed function to Class.
     if (!(this instanceof Class) && isFunction(o)) {
-      return classify(o);
+      // extended object will not call this function but call initialize
+      return classify(o).implement({
+        initialize: o
+      });
     }
   }
 
@@ -24,116 +27,77 @@ define(function(require, exports, module) {
 
   // Create a new Class.
   //
-  //  var SuperPig = Class.create({
-  //    Extends: Animal,
-  //    Implements: Flyable,
+  //  var Animal = Class.create({
+  //    initialize: function() {}
+  //  });
+  //
+  //  var SuperPig = Animal.extend({
   //    initialize: function() {
   //      SuperPig.superclass.initialize.apply(this, arguments)
-  //    },
-  //    Statics: {
-  //      COLOR: 'red'
   //    }
-  // })
-  //
-  Class.create = function(parent, properties) {
-    if (!isFunction(parent)) {
-      properties = parent;
-      parent = null;
-    }
+  //  }).implement(Flyable)
 
+  Class.create = function(properties) {
     properties || (properties = {});
-    parent || (parent = properties.Extends || Class);
-    properties.Extends = parent;
 
     // The created class constructor
     function SubClass() {
-      // Call the parent constructor.
-      parent.apply(this, arguments);
-
       // Only call initialize in self constructor.
       if (this.constructor === SubClass && this.initialize) {
         this.initialize.apply(this, arguments);
       }
     }
 
-    // Inherit class (static) properties from parent.
-    if (parent !== Class) {
-      mix(SubClass, parent, parent.StaticsWhiteList);
-    }
+    // Transform normal function to class
+    classify(SubClass);
 
     // Add instance properties to the subclass.
-    implement.call(SubClass, properties);
+    SubClass.implement(properties);
 
-    // Make subclass extendable.
-    return classify(SubClass);
+    return SubClass;
   };
-
-
-  function implement(properties) {
-    var key, value;
-
-    for (key in properties) {
-      value = properties[key];
-
-      if (Class.Mutators.hasOwnProperty(key)) {
-        Class.Mutators[key].call(this, value);
-      } else {
-        this.prototype[key] = value;
-      }
-    }
-  }
-
-
-  // Create a sub Class based on `Class`.
-  Class.extend = function(properties) {
-    properties || (properties = {});
-    properties.Extends = this;
-
-    return Class.create(properties);
-  };
-
 
   function classify(cls) {
-    cls.extend = Class.extend;
+    _extend(cls, Class);
+    cls.extend = extend;
     cls.implement = implement;
     return cls;
   }
 
+  function implement(properties) {
+    isArray(properties) || (properties = [properties]);
+    var item, proto = this.prototype;
 
-  // Mutators define special properties.
-  Class.Mutators = {
-
-    'Extends': function(parent) {
-      var existed = this.prototype;
-      var proto = createProto(parent.prototype);
-
-      // Keep existed properties.
-      mix(proto, existed);
-
-      // Enforce the constructor to be what we expect.
-      proto.constructor = this;
-
-      // Set the prototype chain to inherit from `parent`.
-      this.prototype = proto;
-
-      // Set a convenience property in case the parent's prototype is
-      // needed later.
-      this.superclass = parent.prototype;
-    },
-
-    'Implements': function(items) {
-      isArray(items) || (items = [items]);
-      var proto = this.prototype, item;
-
-      while (item = items.shift()) {
-        mix(proto, item.prototype || item);
-      }
-    },
-
-    'Statics': function(staticProperties) {
-      mix(this, staticProperties);
+    while (item = properties.shift()) {
+      mix(proto, item.prototype || item);
     }
-  };
+    return this;
+  }
+
+  function extend(properties) {
+    var subClass = Class.create(properties);
+    _extend(subClass, this);
+    mix(subClass, this, ['extend', 'implement', 'superclass']);
+    return subClass;
+  }
+
+  function _extend (self, parent) {
+    var existed = self.prototype;
+    var proto = createProto(parent.prototype);
+
+    // Keep existed properties.
+    mix(proto, existed);
+
+    // Enforce the constructor to be what we expect.
+    proto.constructor = self;
+
+    // Set the prototype chain to inherit from `parent`.
+    self.prototype = proto;
+
+    // Set a convenience property in case the parent's prototype is
+    // needed later.
+    self.superclass = parent.prototype;
+  }
 
 
   // Shared empty constructor function to aid in prototype-chain creation.
@@ -154,11 +118,11 @@ define(function(require, exports, module) {
   // Helpers
   // ------------
 
-  function mix(r, s, wl) {
+  function mix(r, s, bl) {
     // Copy "all" properties including inherited ones.
     for (var p in s) {
       if (s.hasOwnProperty(p)) {
-        if (wl && indexOf(wl, p) === -1) continue;
+        if (bl && indexOf(bl, p) !== -1) continue;
 
         // 在 iPhone 1 代等设备的 Safari 中，prototype 也会被枚举出来，需排除
         if (p !== 'prototype') {
