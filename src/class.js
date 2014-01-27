@@ -65,7 +65,7 @@ define(function(require, exports, module) {
   }
 
   function implement(properties) {
-    isArray(properties) || (properties = [properties]);
+    Array.isArray(properties) || (properties = [properties]);
     var item, proto = this.prototype;
 
     while (item = properties.shift()) {
@@ -122,7 +122,7 @@ define(function(require, exports, module) {
     // Copy "all" properties including inherited ones.
     for (var p in s) {
       if (s.hasOwnProperty(p)) {
-        if (bl && indexOf(bl, p) !== -1) continue;
+        if (bl && bl.indexOf(p) !== -1) continue;
 
         // 在 iPhone 1 代等设备的 Safari 中，prototype 也会被枚举出来，需排除
         if (p !== 'prototype') {
@@ -135,24 +135,7 @@ define(function(require, exports, module) {
 
   var toString = Object.prototype.toString;
 
-  var isArray = Array.isArray || function(val) {
-    return toString.call(val) === '[object Array]';
-  };
-
   var isFunction = function(val) {
     return toString.call(val) === '[object Function]';
   };
-
-  var indexOf = Array.prototype.indexOf ?
-    function(arr, item) {
-      return arr.indexOf(item);
-    } :
-    function(arr, item) {
-      for (var i = 0, len = arr.length; i < len; i++) {
-        if (arr[i] === item) {
-          return i;
-        }
-      }
-      return -1;
-    };
 });
