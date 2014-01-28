@@ -83,7 +83,7 @@ define(function(require, exports, module) {
 
   function _extend (self, parent) {
     var existed = self.prototype;
-    var proto = createProto(parent.prototype);
+    var proto = Object.create(parent.prototype);
 
     // Keep existed properties.
     mix(proto, existed);
@@ -98,21 +98,6 @@ define(function(require, exports, module) {
     // needed later.
     self.superclass = parent.prototype;
   }
-
-
-  // Shared empty constructor function to aid in prototype-chain creation.
-  function Ctor() {
-  }
-
-  // See: http://jsperf.com/object-create-vs-new-ctor
-  var createProto = Object['__proto__'] ?
-    function(proto) {
-      return { '__proto__': proto };
-    } :
-    function(proto) {
-      Ctor.prototype = proto;
-      return new Ctor();
-    };
 
 
   // Helpers
