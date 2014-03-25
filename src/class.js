@@ -14,7 +14,7 @@ define(function(require, exports, module) {
   // The base Class implementation.
   function Class(o) {
     // Convert existed function to Class.
-    if (!(this instanceof Class) && isFunction(o)) {
+    if (isFunction(o)) {
       // extended object will not call this function but call initialize
       return classify(o).implement({
         initialize: o
