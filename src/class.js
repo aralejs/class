@@ -81,7 +81,7 @@ define(function(require, exports, module) {
     return subClass;
   }
 
-  function _extend (self, parent) {
+  function _extend(self, parent) {
     var existed = self.prototype;
     var proto = Object.create(parent.prototype);
 
@@ -113,10 +113,8 @@ define(function(require, exports, module) {
     }
   }
 
+  function isFunction(val) {
+    return Object.prototype.toString.call(val) === '[object Function]';
+  }
 
-  var toString = Object.prototype.toString;
-
-  var isFunction = function(val) {
-    return toString.call(val) === '[object Function]';
-  };
 });
