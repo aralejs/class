@@ -4,7 +4,7 @@ node_js:
   - "0.10"
 
 install:
-  - npm install https://github.com/spmjs/spm/tree/master
+  - npm install https://github.com/spmjs/spm/tarball/master
 
 before_script:
   - node_modules/.bin/spm-install
