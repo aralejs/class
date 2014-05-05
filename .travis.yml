@@ -7,7 +7,7 @@ install:
   - npm install https://github.com/spmjs/spm/tarball/master
 
 before_script:
-  - node_modules/.bin/spm-install
+  - node_modules/spm/bin/spm-install
 
 script:
-  - node_modules/.bin/spm-test
+  - node_modules/spm/bin/spm-test
