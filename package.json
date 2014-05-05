@@ -17,7 +17,13 @@
         "url": "https://github.com/aralejs/class/issues"
     },
     "spm": {
-        "main": "src/class.js",
-        "output": ["src/class.js"]
+        "main": "index.js",
+        "devDependencies": {
+            "expect": "0.3.1"
+        },
+        "engines": {
+            "seajs": "2.2.1"
+        },
+        "tests": "tests/*-spec.js"
     }
 }

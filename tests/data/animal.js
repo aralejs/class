@@ -1,9 +1,5 @@
-define(function(require, exports, module) {
+var Class = require('../../index')
 
-  var Class = require('class')
-
-  module.exports = Class.create({
-    isAnimal: true
-  })
-
+module.exports = Class.create({
+  isAnimal: true
 })

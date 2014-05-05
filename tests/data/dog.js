@@ -1,9 +1,5 @@
-define(function(require) {
+var Animal = require('./animal')
 
-  var Animal = require('./animal')
-
-  return Animal.extend({
-    isDog: true
-  })
-
+module.exports = Animal.extend({
+  isDog: true
 })
