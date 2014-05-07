@@ -11,3 +11,7 @@ before_script:
 
 script:
   - node_modules/spm/bin/spm-test
+
+after_success:
+  - npm install coveralls
+  - node_modules/spm/bin/spm-test --coveralls | node_modules/.bin/coveralls
