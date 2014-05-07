@@ -5,6 +5,7 @@ node_js:
 
 install:
   - npm install https://github.com/spmjs/spm/tarball/master
+  - npm install coveralls
 
 before_script:
   - node_modules/spm/bin/spm-install
@@ -13,5 +14,4 @@ script:
   - node_modules/spm/bin/spm-test
 
 after_success:
-  - npm install coveralls
   - node_modules/spm/bin/spm-test --coveralls | node_modules/.bin/coveralls
