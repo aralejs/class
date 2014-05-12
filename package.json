@@ -17,7 +17,7 @@
         "url": "https://github.com/aralejs/class/issues"
     },
     "spm": {
-        "main": "index.js",
+        "main": "class.js",
         "devDependencies": {
             "expect": "0.3.1"
         },

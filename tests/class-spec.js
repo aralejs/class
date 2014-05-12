@@ -1,4 +1,4 @@
-var Class = require('../index')
+var Class = require('../class')
 var expect = require('expect')
 
 describe('Class', function() {
