@@ -19,3 +19,4 @@ _site
 _theme
 sea-modules
 node_modules
+dist/
