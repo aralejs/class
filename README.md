@@ -167,7 +167,3 @@ var Dog = Class(Animal).extend({
 
 - <http://jsperf.com/class-perfs/9>
 
-
-
-[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/aralejs/class/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
-
