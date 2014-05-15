@@ -2,6 +2,7 @@
 
 ---
 
+[![spm package](http://spmjs.io/badge/arale-class](http://spmjs.io/package/arale-class)
 [![Build Status](https://secure.travis-ci.org/aralejs/class.png?branch=master)](https://travis-ci.org/aralejs/class)
 [![Coverage Status](https://coveralls.io/repos/aralejs/class/badge.png?branch=master)](https://coveralls.io/r/aralejs/class)
 
