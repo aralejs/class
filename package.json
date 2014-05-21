@@ -1,29 +1,29 @@
 {
-    "name": "arale-class",
-    "version": "1.2.0",
-    "keywords": ["infrastructure"],
-    "description": "提供简洁的 OO 实现。",
-    "homepage": "http://aralejs.org/class/",
-    "author": "玉伯 <lifesinger@gmail.com>",
-    "maintainers": [
-        "玉伯 <lifesinger@gmail.com>",
-        "贯高 <sakura9515@gmail.com>"
-    ],
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/aralejs/class.git"
+  "name": "arale-class",
+  "version": "1.2.0",
+  "keywords": ["infrastructure"],
+  "description": "提供简洁的 OO 实现。",
+  "homepage": "http://aralejs.org/class/",
+  "author": "玉伯 <lifesinger@gmail.com>",
+  "maintainers": [
+    "玉伯 <lifesinger@gmail.com>",
+    "贯高 <sakura9515@gmail.com>"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/aralejs/class.git"
+  },
+  "bugs": {
+    "url": "https://github.com/aralejs/class/issues"
+  },
+  "spm": {
+    "main": "class.js",
+    "devDependencies": {
+      "expect": "0.3.1"
     },
-    "bugs": {
-        "url": "https://github.com/aralejs/class/issues"
+    "engines": {
+      "seajs": "2.2.1"
     },
-    "spm": {
-        "main": "class.js",
-        "devDependencies": {
-            "expect": "0.3.1"
-        },
-        "engines": {
-            "seajs": "2.2.1"
-        },
-        "tests": "tests/*-spec.js"
-    }
+    "tests": "tests/*-spec.js"
+  }
 }
