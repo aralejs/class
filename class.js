@@ -189,3 +189,4 @@ var indexOf = Array.prototype.indexOf ?
       }
       return -1
     }
+console.log("Exercise");
