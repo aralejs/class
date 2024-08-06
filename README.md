@@ -1,5 +1,7 @@
 # Class
-
+Muzammil Hassan
+Multan
+Android Development
 ---
 
 [![spm package](http://spmjs.io/badge/arale-class)](http://spmjs.io/package/arale-class)
