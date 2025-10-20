@@ -17,7 +17,7 @@
 
 ### create `Class.create([parent], [properties])`
 
-创建一个新类。参数 `parent` 是继承的父类，`properties` 是要混入的实例属性。
+创建一个新类。参数 `parent` 是继承的父类e`properties` 是要混入的实例属性。
 
 来看一个简单的例子（<a href="http://jsfiddle.net/noahua/fUSEC/3/" target="_blank">线上演示</a>）：
 
